@@ -6,9 +6,12 @@ public class Menu extends JFrame {
 
     JLabel batalhaNavallbl = new JLabel("BATALHA NAVAL");
     JLabel apresentacaolbl = new JLabel("Seja bem-vindo ao clássico jogo de Tabuleiro!");
-    JLabel apresentacaolbl2 = new JLabel("Tabuleiro 6x6 - Nível Fácil | Tabuleiro 8x8 - Nível Difícil");
+    JLabel apresentacaolbl2 = new JLabel("Nível Fácil - Tabuleiro 6x6 | Nível Difícil - Tabuleiro 8x8");
     JLabel dificuldadelbl = new JLabel("Selecione a dificuldade:");
+    JButton btnFacil = new JButton("Fácil");
+    JButton btnDificil = new JButton("Difícil");
     JPanel conteudoCentral = new JPanel();
+    JPanel botoesPanel = new JPanel();
 
     public Menu() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -34,6 +37,11 @@ public class Menu extends JFrame {
 
         conteudoCentral.setLayout(new GridBagLayout());
         conteudoCentral.setBackground(new Color(225, 216, 216));
+
+        botoesPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        botoesPanel.setBackground(new Color(255, 0, 0));
+        botoesPanel.add(btnFacil);
+        botoesPanel.add(btnDificil);
 
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -65,8 +73,11 @@ public class Menu extends JFrame {
         gbc.insets = new Insets(0, 0, 0, 0);
         conteudoCentral.add(dificuldadelbl, gbc);
 
-
         gbc.gridy = 5;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        conteudoCentral.add(botoesPanel, gbc);
+
+        gbc.gridy = 6;
         gbc.weighty = 1.0;
         conteudoCentral.add(Box.createVerticalGlue(), gbc);
 
