@@ -102,7 +102,6 @@ public class Menu extends JFrame {
         btnFacil.addActionListener(e -> {
             Tabuleiro tabuleiro = new Tabuleiro(6,6);
             tabuleiro.setVisible(true);
-
             dispose();
         });
 
