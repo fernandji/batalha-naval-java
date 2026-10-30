@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 public class Menu extends JFrame {
@@ -20,6 +22,7 @@ public class Menu extends JFrame {
         setSize(800, 600);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+
         Font michroma = null;
         try {
             michroma = Font.createFont(
@@ -39,7 +42,19 @@ public class Menu extends JFrame {
         conteudoCentral.setBackground(new Color(225, 216, 216));
 
         botoesPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        botoesPanel.setBackground(new Color(255, 0, 0));
+        botoesPanel.setBackground(new Color(225, 216, 216));
+
+
+        btnFacil.setBackground(new Color(255, 255, 255));
+        btnFacil.setFont(michroma.deriveFont(22f));
+        btnFacil.setFocusPainted(false);
+        btnFacil.setPreferredSize(new Dimension(180, 50));
+
+        btnDificil.setBackground(new Color(255, 255, 255));
+        btnDificil.setFont(michroma.deriveFont(22f));
+        btnDificil.setFocusPainted(false);
+        btnDificil.setPreferredSize(new Dimension(180, 50));
+
         botoesPanel.add(btnFacil);
         botoesPanel.add(btnDificil);
 
@@ -74,7 +89,7 @@ public class Menu extends JFrame {
         conteudoCentral.add(dificuldadelbl, gbc);
 
         gbc.gridy = 5;
-        gbc.insets = new Insets(0, 0, 0, 0);
+        gbc.insets = new Insets(10, 0, 0, 0);
         conteudoCentral.add(botoesPanel, gbc);
 
         gbc.gridy = 6;
@@ -82,9 +97,19 @@ public class Menu extends JFrame {
         conteudoCentral.add(Box.createVerticalGlue(), gbc);
 
 
-
-
-
         add(conteudoCentral, BorderLayout.CENTER);
+
+        btnFacil.addActionListener(e -> {
+            Tabuleiro tabuleiro = new Tabuleiro(6,6);
+            tabuleiro.setVisible(true);
+
+            dispose();
+        });
+
+        btnDificil.addActionListener(e -> {
+            Tabuleiro tabuleiro = new Tabuleiro(8,8);
+            tabuleiro.setVisible(true);
+            dispose();
+        });
     }
 }
