@@ -33,6 +33,7 @@ public class Menu extends JFrame {
             apresentacaolbl.setFont(michroma.deriveFont(22f));
             apresentacaolbl2.setFont(michroma.deriveFont(22f));
             dificuldadelbl.setFont(michroma.deriveFont(22f));
+
         } catch (Exception e) {
             System.out.println("Erro ao carregar fonte! Erro: " + e.getMessage());
         }

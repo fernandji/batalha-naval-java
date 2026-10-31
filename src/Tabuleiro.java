@@ -1,15 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Tabuleiro extends JFrame {
 
     JPanel tabuleiroPanel = new JPanel();
 
-    public Tabuleiro(int linhas, int colunas){
+
+    public Tabuleiro(int linhas, int colunas) {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Batalha Naval");
         setLayout(new BorderLayout());
-        setSize(800,600);
+        setSize(800, 600);
         setBackground(new Color(225, 216, 216));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -18,20 +21,49 @@ public class Tabuleiro extends JFrame {
 
         int[][] matriz = new int[LINHAS][COLUNAS];
 
-        tabuleiroPanel.setLayout(new GridLayout(LINHAS, COLUNAS));
+        tabuleiroPanel.setLayout(new GridLayout(LINHAS + 1, COLUNAS + 1));
+        tabuleiroPanel.setPreferredSize(new Dimension(500, 500));
 
-        for(int i = 0; i < LINHAS; i++){
-            for(int j = 0; j < COLUNAS; j++){
+        for (int i = 0; i < LINHAS + 1; i++) {
+            for (int j = 0; j < COLUNAS + 1; j++) {
 
-                JButton posicao = new JButton();
-                posicao.setBackground(new Color(121, 183, 216));
+                if (i == 0 && j == 0) {
+                    tabuleiroPanel.add(new JLabel(""));
 
-                tabuleiroPanel.add(posicao);
+                } else if (i == 0) {
+                    Map<Integer, String> letras = new LinkedHashMap<>();
+                    letras.put(1, "A");
+                    letras.put(2, "B");
+                    letras.put(3, "C");
+                    letras.put(4, "D");
+                    letras.put(5, "E");
+                    letras.put(6, "F");
+                    letras.put(7, "G");
+                    letras.put(8, "H");
+
+                    JLabel letra = new JLabel(letras.get(j));
+                    letra.setFont(new Font("Arial", Font.BOLD, 30));
+                    tabuleiroPanel.add(letra);
+
+                } else if (j == 0) {
+                    JLabel numero = new JLabel(String.valueOf(i));
+                    numero.setFont(new Font("Arial", Font.BOLD, 30));
+                    tabuleiroPanel.add(numero);
+
+                } else {
+                    JButton posicao = new JButton();
+                    posicao.setBackground(new Color(121, 183, 216));
+                    tabuleiroPanel.add(posicao);
+                }
+
             }
         }
 
-        add(tabuleiroPanel, BorderLayout.CENTER);
+        JPanel painelCentral = new JPanel(new GridBagLayout());
+        painelCentral.add(tabuleiroPanel);
 
-        setVisible(true);
+        add(painelCentral, BorderLayout.CENTER);
+
+
     }
 }
