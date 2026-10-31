@@ -23,20 +23,13 @@ public class Menu extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 
-        Font michroma = null;
-        try {
-            michroma = Font.createFont(
-                    Font.TRUETYPE_FONT,
-                    new File("src/fonts/Michroma-Regular.ttf")
-            );
-            batalhaNavallbl.setFont(michroma.deriveFont(40f));
-            apresentacaolbl.setFont(michroma.deriveFont(22f));
-            apresentacaolbl2.setFont(michroma.deriveFont(22f));
-            dificuldadelbl.setFont(michroma.deriveFont(22f));
+        FontProvider fontProvider = new FontProvider();
+        Font michroma = fontProvider.gerarMichroma();
 
-        } catch (Exception e) {
-            System.out.println("Erro ao carregar fonte! Erro: " + e.getMessage());
-        }
+        batalhaNavallbl.setFont(michroma.deriveFont(40f));
+        apresentacaolbl.setFont(michroma.deriveFont(22f));
+        apresentacaolbl2.setFont(michroma.deriveFont(22f));
+        dificuldadelbl.setFont(michroma.deriveFont(22f));
 
 
         conteudoCentral.setLayout(new GridBagLayout());
@@ -101,13 +94,13 @@ public class Menu extends JFrame {
         add(conteudoCentral, BorderLayout.CENTER);
 
         btnFacil.addActionListener(e -> {
-            Tabuleiro tabuleiro = new Tabuleiro(6,6);
+            Tabuleiro tabuleiro = new Tabuleiro(6, 6);
             tabuleiro.setVisible(true);
             dispose();
         });
 
         btnDificil.addActionListener(e -> {
-            Tabuleiro tabuleiro = new Tabuleiro(8,8);
+            Tabuleiro tabuleiro = new Tabuleiro(8, 8);
             tabuleiro.setVisible(true);
             dispose();
         });

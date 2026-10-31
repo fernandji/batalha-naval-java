@@ -43,7 +43,9 @@ public class Tabuleiro extends JFrame {
 
                     JLabel letra = new JLabel(letras.get(j));
                     letra.setFont(new Font("Arial", Font.BOLD, 30));
-                    tabuleiroPanel.add(letra);
+                    JPanel campo = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                    campo.add(letra);
+                    tabuleiroPanel.add(campo);
 
                 } else if (j == 0) {
                     JLabel numero = new JLabel(String.valueOf(i));
