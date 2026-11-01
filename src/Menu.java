@@ -23,8 +23,8 @@ public class Menu extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 
-        FontProvider fontProvider = new FontProvider();
-        Font michroma = fontProvider.gerarMichroma();
+
+        Font michroma = FontProvider.gerarMichroma();
 
         batalhaNavallbl.setFont(michroma.deriveFont(40f));
         apresentacaolbl.setFont(michroma.deriveFont(22f));

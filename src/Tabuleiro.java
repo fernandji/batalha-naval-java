@@ -16,6 +16,9 @@ public class Tabuleiro extends JFrame {
         setBackground(new Color(225, 216, 216));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+
+        Font michroma = FontProvider.gerarMichroma();
+
         final int LINHAS = linhas;
         final int COLUNAS = colunas;
 
@@ -24,6 +27,16 @@ public class Tabuleiro extends JFrame {
         tabuleiroPanel.setLayout(new GridLayout(LINHAS + 1, COLUNAS + 1));
         tabuleiroPanel.setPreferredSize(new Dimension(500, 500));
 
+        Map<Integer, String> letras = new LinkedHashMap<>();
+        letras.put(1, "A");
+        letras.put(2, "B");
+        letras.put(3, "C");
+        letras.put(4, "D");
+        letras.put(5, "E");
+        letras.put(6, "F");
+        letras.put(7, "G");
+        letras.put(8, "H");
+
         for (int i = 0; i < LINHAS + 1; i++) {
             for (int j = 0; j < COLUNAS + 1; j++) {
 
@@ -31,25 +44,17 @@ public class Tabuleiro extends JFrame {
                     tabuleiroPanel.add(new JLabel(""));
 
                 } else if (i == 0) {
-                    Map<Integer, String> letras = new LinkedHashMap<>();
-                    letras.put(1, "A");
-                    letras.put(2, "B");
-                    letras.put(3, "C");
-                    letras.put(4, "D");
-                    letras.put(5, "E");
-                    letras.put(6, "F");
-                    letras.put(7, "G");
-                    letras.put(8, "H");
 
                     JLabel letra = new JLabel(letras.get(j));
-                    letra.setFont(new Font("Arial", Font.BOLD, 30));
+                    letra.setFont(michroma.deriveFont(30f));
+
                     JPanel campo = new JPanel(new FlowLayout(FlowLayout.CENTER));
                     campo.add(letra);
                     tabuleiroPanel.add(campo);
 
                 } else if (j == 0) {
                     JLabel numero = new JLabel(String.valueOf(i));
-                    numero.setFont(new Font("Arial", Font.BOLD, 30));
+                    numero.setFont(michroma.deriveFont(30f));
                     tabuleiroPanel.add(numero);
 
                 } else {
@@ -63,6 +68,7 @@ public class Tabuleiro extends JFrame {
 
         JPanel painelCentral = new JPanel(new GridBagLayout());
         painelCentral.add(tabuleiroPanel);
+
 
         add(painelCentral, BorderLayout.CENTER);
 
