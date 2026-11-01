@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -66,12 +68,29 @@ public class Tabuleiro extends JFrame {
             }
         }
 
+        JLabel totalTiros = new JLabel("Total de tiros restantes: ");
+        JPanel painelDireita = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        painelDireita.add(totalTiros);
+
         JPanel painelCentral = new JPanel(new GridBagLayout());
         painelCentral.add(tabuleiroPanel);
 
 
-        add(painelCentral, BorderLayout.CENTER);
+        JButton btnVoltar = new JButton("Voltar");
+        btnVoltar.setFont(michroma.deriveFont(20f));
+        btnVoltar.setFocusPainted(false);
+        JPanel painelEsquerda = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        painelEsquerda.add(btnVoltar);
 
+        add(painelCentral, BorderLayout.CENTER);
+        add(painelDireita, BorderLayout.EAST);
+        add(painelEsquerda,BorderLayout.WEST);
+
+        btnVoltar.addActionListener(e -> {
+            Menu menu = new Menu();
+            menu.setVisible(true);
+            dispose();
+        });
 
     }
 }
