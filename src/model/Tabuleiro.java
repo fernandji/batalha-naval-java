@@ -10,7 +10,7 @@ public class Tabuleiro extends JFrame {
     JPanel tabuleiroPanel = new JPanel();
 
 
-    public Tabuleiro(int linhas, int colunas) {
+    public Tabuleiro(int tamanhoMatriz) {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Batalha Naval");
         setLayout(new BorderLayout());
@@ -21,12 +21,10 @@ public class Tabuleiro extends JFrame {
 
         Font michroma = FontProvider.gerarMichroma();
 
-        final int LINHAS = linhas;
-        final int COLUNAS = colunas;
 
-        int[][] matriz = new int[LINHAS][COLUNAS];
+        int[][] matriz = new int[tamanhoMatriz][tamanhoMatriz];
 
-        tabuleiroPanel.setLayout(new GridLayout(LINHAS + 1, COLUNAS + 1));
+        tabuleiroPanel.setLayout(new GridLayout(tamanhoMatriz + 1, tamanhoMatriz + 1));
         tabuleiroPanel.setPreferredSize(new Dimension(500, 500));
 
         Map<Integer, String> letras = new LinkedHashMap<>();
@@ -39,8 +37,8 @@ public class Tabuleiro extends JFrame {
         letras.put(7, "G");
         letras.put(8, "H");
 
-        for (int i = 0; i < LINHAS + 1; i++) {
-            for (int j = 0; j < COLUNAS + 1; j++) {
+        for (int i = 0; i < tamanhoMatriz + 1; i++) {
+            for (int j = 0; j < tamanhoMatriz + 1; j++) {
 
                 if (i == 0 && j == 0) {
                     tabuleiroPanel.add(new JLabel(""));

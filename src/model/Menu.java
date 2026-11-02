@@ -93,13 +93,13 @@ public class Menu extends JFrame {
         add(conteudoCentral, BorderLayout.CENTER);
 
         btnFacil.addActionListener(e -> {
-            Tabuleiro tabuleiro = new Tabuleiro(6, 6);
+            Tabuleiro tabuleiro = new Tabuleiro(6);
             tabuleiro.setVisible(true);
             dispose();
         });
 
         btnDificil.addActionListener(e -> {
-            Tabuleiro tabuleiro = new Tabuleiro(8, 8);
+            Tabuleiro tabuleiro = new Tabuleiro(8);
             tabuleiro.setVisible(true);
             dispose();
         });
