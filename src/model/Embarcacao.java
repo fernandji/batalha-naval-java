@@ -5,6 +5,11 @@ public class Embarcacao {
     private int tamanho;
     private int partesAtingidas;
 
+    public Embarcacao(String nome, int tamanho){
+        this.nome = nome;
+        this.tamanho = tamanho;
+    }
+
     public void registrarAcerto(){
         partesAtingidas += 1;
     }
