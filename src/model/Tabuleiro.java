@@ -57,6 +57,7 @@ public class Tabuleiro extends JFrame {
                 } else {
                     JButton posicao = new JButton();
                     posicao.setBackground(new Color(121, 183, 216));
+                    posicao.setFocusPainted(false);
 
                     int linhaMatriz = i - 1;
                     int colunaMatriz = j - 1;
@@ -65,6 +66,18 @@ public class Tabuleiro extends JFrame {
                     if (matriz[linhaMatriz][colunaMatriz] != -1) {
                         posicao.setText("N");
                     }
+
+                    posicao.addActionListener(e -> {
+                        int embarcacao = matriz[linhaMatriz][colunaMatriz];
+
+                        if (embarcacao == -1) {
+                            posicao.setText("Água");
+                        } else {
+                            posicao.setText("Acerto");
+                        }
+
+                        posicao.setEnabled(false);
+                    });
 
                     tabuleiroPanel.add(posicao);
                 }
