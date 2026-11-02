@@ -102,4 +102,28 @@ public class Jogo {
                 "Não foi possível posicionar todos os navios."
         );
     }
+
+    public int getTotalTirosRestantes() {
+        return totalTirosRestantes;
+    }
+
+    public void setTotalTirosRestantes(int totalTirosRestantes) {
+        this.totalTirosRestantes = totalTirosRestantes;
+    }
+
+    public int[][] getMatriz() {
+        return matriz;
+    }
+
+    public void setMatriz(int[][] matriz) {
+        this.matriz = matriz;
+    }
+
+    public List<Embarcacao> getEmbarcacoes() {
+        return embarcacoes;
+    }
+
+    public void setEmbarcacoes(List<Embarcacao> embarcacoes) {
+        this.embarcacoes = embarcacoes;
+    }
 }
