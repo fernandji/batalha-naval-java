@@ -7,24 +7,23 @@ import java.util.Map;
 
 public class Tabuleiro extends JFrame {
 
-    JPanel tabuleiroPanel = new JPanel();
+    private final JPanel tabuleiroPanel = new JPanel();
 
+    public Tabuleiro(Jogo jogo) {
+        int[][] matriz = jogo.getMatriz();
+        int tamanhoMatriz = matriz.length;
 
-    public Tabuleiro(int tamanhoMatriz) {
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Batalha Naval");
         setLayout(new BorderLayout());
         setSize(800, 600);
-        setBackground(new Color(225, 216, 216));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-
 
         Font michroma = FontProvider.gerarMichroma();
 
-
-        int[][] matriz = new int[tamanhoMatriz][tamanhoMatriz];
-
-        tabuleiroPanel.setLayout(new GridLayout(tamanhoMatriz + 1, tamanhoMatriz + 1));
+        tabuleiroPanel.setLayout(
+                new GridLayout(tamanhoMatriz + 1, tamanhoMatriz + 1)
+        );
         tabuleiroPanel.setPreferredSize(new Dimension(500, 500));
 
         Map<Integer, String> letras = new LinkedHashMap<>();
@@ -37,58 +36,66 @@ public class Tabuleiro extends JFrame {
         letras.put(7, "G");
         letras.put(8, "H");
 
-        for (int i = 0; i < tamanhoMatriz + 1; i++) {
-            for (int j = 0; j < tamanhoMatriz + 1; j++) {
+        for (int i = 0; i <= tamanhoMatriz; i++) {
+            for (int j = 0; j <= tamanhoMatriz; j++) {
 
                 if (i == 0 && j == 0) {
                     tabuleiroPanel.add(new JLabel(""));
 
                 } else if (i == 0) {
-
                     JLabel letra = new JLabel(letras.get(j));
                     letra.setFont(michroma.deriveFont(30f));
-
-                    JPanel campo = new JPanel(new FlowLayout(FlowLayout.CENTER));
-                    campo.add(letra);
-                    tabuleiroPanel.add(campo);
+                    letra.setHorizontalAlignment(SwingConstants.CENTER);
+                    tabuleiroPanel.add(letra);
 
                 } else if (j == 0) {
                     JLabel numero = new JLabel(String.valueOf(i));
                     numero.setFont(michroma.deriveFont(30f));
+                    numero.setHorizontalAlignment(SwingConstants.CENTER);
                     tabuleiroPanel.add(numero);
 
                 } else {
                     JButton posicao = new JButton();
                     posicao.setBackground(new Color(121, 183, 216));
+
+                    int linhaMatriz = i - 1;
+                    int colunaMatriz = j - 1;
+
+                    //temporário, apenas para mostrar navios durante o desenvolvimento
+                    if (matriz[linhaMatriz][colunaMatriz] != -1) {
+                        posicao.setText("N");
+                    }
+
                     tabuleiroPanel.add(posicao);
                 }
-
             }
         }
 
-        JLabel totalTiros = new JLabel("Total de tiros restantes: ");
+        JLabel totalTiros = new JLabel(
+                "Total de tiros restantes: " + jogo.getTotalTirosRestantes()
+        );
+
         JPanel painelDireita = new JPanel(new FlowLayout(FlowLayout.CENTER));
         painelDireita.add(totalTiros);
 
         JPanel painelCentral = new JPanel(new GridBagLayout());
         painelCentral.add(tabuleiroPanel);
 
-
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.setFont(michroma.deriveFont(20f));
         btnVoltar.setFocusPainted(false);
+
         JPanel painelEsquerda = new JPanel(new FlowLayout(FlowLayout.CENTER));
         painelEsquerda.add(btnVoltar);
 
         add(painelCentral, BorderLayout.CENTER);
         add(painelDireita, BorderLayout.EAST);
-        add(painelEsquerda,BorderLayout.WEST);
+        add(painelEsquerda, BorderLayout.WEST);
 
         btnVoltar.addActionListener(e -> {
             Menu menu = new Menu();
             menu.setVisible(true);
             dispose();
         });
-
     }
 }
