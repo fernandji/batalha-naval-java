@@ -8,6 +8,7 @@ import java.util.Random;
 public class Jogo {
 
     private int totalTirosRestantes;
+    private int acertos;
     private int[][] matriz;
     private List<Embarcacao> embarcacoes = new LinkedList<>();
     private Random random = new Random();
@@ -103,12 +104,44 @@ public class Jogo {
         );
     }
 
+    public boolean registrarTiro(){
+        if(totalTirosRestantes == 0){
+            return true;
+        }
+        totalTirosRestantes -= 1;
+        return false;
+
+    }
+
+    public void registrarAcerto(){
+        acertos += 1;
+    }
+
+    public String seGanhou(){
+        if(totalTirosRestantes >= 0 && acertos == 20){
+            return "Você ganhou!";
+        } else if(totalTirosRestantes == 0 && acertos < 20){
+            return("Você perdeu!");
+        }
+        return null;
+    }
+
+
+
     public int getTotalTirosRestantes() {
         return totalTirosRestantes;
     }
 
     public void setTotalTirosRestantes(int totalTirosRestantes) {
         this.totalTirosRestantes = totalTirosRestantes;
+    }
+
+    public int getAcertos() {
+        return acertos;
+    }
+
+    public void setAcertos(int acertos) {
+        this.acertos = acertos;
     }
 
     public int[][] getMatriz() {

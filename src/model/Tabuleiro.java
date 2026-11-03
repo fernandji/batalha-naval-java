@@ -26,6 +26,11 @@ public class Tabuleiro extends JFrame {
         );
         tabuleiroPanel.setPreferredSize(new Dimension(500, 500));
 
+        JLabel totalTiros = new JLabel(
+                "Total de tiros restantes: " + jogo.getTotalTirosRestantes()
+        );
+        JLabel resultado = new JLabel();
+
         Map<Integer, String> letras = new LinkedHashMap<>();
         letras.put(1, "A");
         letras.put(2, "B");
@@ -74,8 +79,12 @@ public class Tabuleiro extends JFrame {
                             posicao.setText("Água");
                         } else {
                             posicao.setText("Acerto");
+                            jogo.registrarAcerto();
                         }
 
+                        jogo.registrarTiro();
+                        totalTiros.setText("Total de tiros restantes: " + jogo.getTotalTirosRestantes());
+                        resultado.setText(jogo.seGanhou());
                         posicao.setEnabled(false);
                     });
 
@@ -84,12 +93,13 @@ public class Tabuleiro extends JFrame {
             }
         }
 
-        JLabel totalTiros = new JLabel(
-                "Total de tiros restantes: " + jogo.getTotalTirosRestantes()
-        );
+
+
+
 
         JPanel painelDireita = new JPanel(new FlowLayout(FlowLayout.CENTER));
         painelDireita.add(totalTiros);
+        painelDireita.add(resultado);
 
         JPanel painelCentral = new JPanel(new GridBagLayout());
         painelCentral.add(tabuleiroPanel);
