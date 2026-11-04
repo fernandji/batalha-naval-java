@@ -24,14 +24,17 @@ public class Tabuleiro extends JFrame {
         tabuleiroPanel.setLayout(
                 new GridLayout(tamanhoMatriz + 1, tamanhoMatriz + 1)
         );
-        tabuleiroPanel.setPreferredSize(new Dimension(500, 500));
+        tabuleiroPanel.setPreferredSize(new Dimension(450, 450));
 
-        JLabel totalTiros = new JLabel(
-                "Total de tiros restantes: " + jogo.getTotalTirosRestantes()
-        );
-        totalTiros.setFont(michroma.deriveFont(18f));
+        JLabel totalTirosTxt = new JLabel("Total de tiros restantes: ");
+        totalTirosTxt.setFont(michroma.deriveFont(22f));
+
+        JLabel totalTirosInt = new JLabel(String.valueOf(jogo.getTotalTirosRestantes()));
+        totalTirosInt.setFont(michroma.deriveFont(22f));
+
         JLabel resultado = new JLabel();
-        resultado.setFont(michroma.deriveFont(18f));
+        resultado.setFont(michroma.deriveFont(30f));
+
 
         Map<Integer, String> letras = new LinkedHashMap<>();
         letras.put(1, "A");
@@ -85,7 +88,7 @@ public class Tabuleiro extends JFrame {
                         }
 
                         jogo.registrarTiro();
-                        totalTiros.setText("Total de tiros restantes: " + jogo.getTotalTirosRestantes());
+                        totalTirosInt.setText(String.valueOf(jogo.getTotalTirosRestantes()));
                         resultado.setText(jogo.seGanhou());
                         posicao.setEnabled(false);
                     });
@@ -96,9 +99,24 @@ public class Tabuleiro extends JFrame {
         }
 
 
-        JPanel painelDireita = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        painelDireita.add(totalTiros);
-        painelDireita.add(resultado);
+        JPanel painelDireita = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridx = 0;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weighty = 0;
+
+        gbc.gridy = 0;
+        painelDireita.add(totalTirosTxt, gbc);
+
+        gbc.gridy = 1;
+        painelDireita.add(totalTirosInt, gbc);
+
+        gbc.gridy = 2;
+        gbc.insets = new Insets(10, 0, 20, 0);
+        painelDireita.add(resultado, gbc);
+
 
         JPanel painelCentral = new JPanel(new GridBagLayout());
         painelCentral.add(tabuleiroPanel);
@@ -113,6 +131,7 @@ public class Tabuleiro extends JFrame {
 
         JPanel painelEsquerda = new JPanel(new FlowLayout(FlowLayout.CENTER));
         painelEsquerda.add(btnVoltar);
+        painelEsquerda.add(btnJogarNovamente);
 
         add(painelCentral, BorderLayout.CENTER);
         add(painelDireita, BorderLayout.EAST);
