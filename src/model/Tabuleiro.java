@@ -29,7 +29,9 @@ public class Tabuleiro extends JFrame {
         JLabel totalTiros = new JLabel(
                 "Total de tiros restantes: " + jogo.getTotalTirosRestantes()
         );
+        totalTiros.setFont(michroma.deriveFont(18f));
         JLabel resultado = new JLabel();
+        resultado.setFont(michroma.deriveFont(18f));
 
         Map<Integer, String> letras = new LinkedHashMap<>();
         letras.put(1, "A");
@@ -94,15 +96,16 @@ public class Tabuleiro extends JFrame {
         }
 
 
-
-
-
         JPanel painelDireita = new JPanel(new FlowLayout(FlowLayout.CENTER));
         painelDireita.add(totalTiros);
         painelDireita.add(resultado);
 
         JPanel painelCentral = new JPanel(new GridBagLayout());
         painelCentral.add(tabuleiroPanel);
+
+        JButton btnJogarNovamente = new JButton("Jogar novamente");
+        btnJogarNovamente.setFont(michroma.deriveFont(20f));
+        btnJogarNovamente.setFocusPainted(false);
 
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.setFont(michroma.deriveFont(20f));
