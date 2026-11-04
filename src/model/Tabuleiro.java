@@ -99,27 +99,53 @@ public class Tabuleiro extends JFrame {
         }
 
 
-        JPanel painelDireita = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        JPanel conteudoDireita = new JPanel();
+        conteudoDireita.setLayout(new BoxLayout(conteudoDireita, BoxLayout.Y_AXIS));
 
-        gbc.gridx = 0;
-        gbc.anchor = GridBagConstraints.NORTH;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weighty = 0;
+        totalTirosTxt.setAlignmentX(Component.CENTER_ALIGNMENT);
+        totalTirosInt.setAlignmentX(Component.CENTER_ALIGNMENT);
+        resultado.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        gbc.gridy = 0;
-        painelDireita.add(totalTirosTxt, gbc);
+        conteudoDireita.add(totalTirosTxt);
+        conteudoDireita.add(totalTirosInt);
+        conteudoDireita.add(Box.createVerticalStrut(15));
+        conteudoDireita.add(resultado);
 
-        gbc.gridy = 1;
-        painelDireita.add(totalTirosInt, gbc);
+        JPanel painelDireita = new JPanel(new BorderLayout());
+        painelDireita.add(conteudoDireita, BorderLayout.NORTH);
 
-        gbc.gridy = 2;
-        gbc.insets = new Insets(10, 0, 20, 0);
-        painelDireita.add(resultado, gbc);
+
+        JLabel embarcacoesTotais = new JLabel("Embarcações restantes:");
+        embarcacoesTotais.setFont(michroma.deriveFont(22f));
+        embarcacoesTotais.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JPanel painelEsquerda = new JPanel(new BorderLayout());
+        painelEsquerda.add(embarcacoesTotais, BorderLayout.NORTH);
+
+        int alturaLinha = tabuleiroPanel.getPreferredSize().height / (tamanhoMatriz + 1);
+
+        painelDireita.setBorder(BorderFactory.createEmptyBorder(alturaLinha, 0, 0, 0));
+        painelEsquerda.setBorder(BorderFactory.createEmptyBorder(alturaLinha, 0, 0, 0));
+
+        int largura = Math.max(
+                painelEsquerda.getPreferredSize().width,
+                painelDireita.getPreferredSize().width
+        );
+
+        largura = Math.max(largura, 350);
+        painelEsquerda.setPreferredSize(new Dimension(largura, 0));
+        painelDireita.setPreferredSize(new Dimension(largura, 0));
+
+
+        JPanel linhaJogo = new JPanel(new BorderLayout(30, 0));
+        linhaJogo.add(painelEsquerda, BorderLayout.WEST);
+        linhaJogo.add(tabuleiroPanel, BorderLayout.CENTER);
+        linhaJogo.add(painelDireita, BorderLayout.EAST);
 
 
         JPanel painelCentral = new JPanel(new GridBagLayout());
-        painelCentral.add(tabuleiroPanel);
+        painelCentral.add(linhaJogo);
+
 
         JButton btnJogarNovamente = new JButton("Jogar novamente");
         btnJogarNovamente.setFont(michroma.deriveFont(20f));
@@ -129,21 +155,12 @@ public class Tabuleiro extends JFrame {
         btnVoltar.setFont(michroma.deriveFont(20f));
         btnVoltar.setFocusPainted(false);
 
-        JPanel painelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel painelSuperior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         painelSuperior.add(btnVoltar);
         painelSuperior.add(btnJogarNovamente);
 
-        JLabel embarcacoesTotais = new JLabel("Embarcações restantes:");
-        embarcacoesTotais.setFont(michroma.deriveFont(22f));
-
-        JPanel painelEsquerda = new JPanel(new GridBagLayout());
-        painelEsquerda.add(embarcacoesTotais);
-
-
         add(painelSuperior, BorderLayout.NORTH);
         add(painelCentral, BorderLayout.CENTER);
-        add(painelDireita, BorderLayout.EAST);
-        add(painelEsquerda, BorderLayout.WEST);
 
         btnVoltar.addActionListener(e -> {
             Menu menu = new Menu();
