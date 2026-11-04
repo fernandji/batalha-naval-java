@@ -8,7 +8,7 @@ import java.util.Map;
 public class Tabuleiro extends JFrame {
 
     private final JPanel tabuleiroPanel = new JPanel();
-    private final Font michroma = FontProvider.gerarMichroma();
+    private final Font MICHROMA = FontProvider.gerarMichroma();
 
     public Tabuleiro(Jogo jogo) {
         int[][] matriz = jogo.getMatriz();
@@ -27,13 +27,13 @@ public class Tabuleiro extends JFrame {
         tabuleiroPanel.setPreferredSize(new Dimension(450, 450));
 
         JLabel totalTirosTxt = new JLabel("Total de tiros restantes: ");
-        totalTirosTxt.setFont(michroma.deriveFont(22f));
+        totalTirosTxt.setFont(MICHROMA.deriveFont(22f));
 
         JLabel totalTirosInt = new JLabel(String.valueOf(jogo.getTotalTirosRestantes()));
-        totalTirosInt.setFont(michroma.deriveFont(22f));
+        totalTirosInt.setFont(MICHROMA.deriveFont(22f));
 
         JLabel resultado = new JLabel();
-        resultado.setFont(michroma.deriveFont(30f));
+        resultado.setFont(MICHROMA.deriveFont(30f));
 
 
         Map<Integer, String> letras = new LinkedHashMap<>();
@@ -54,13 +54,13 @@ public class Tabuleiro extends JFrame {
 
                 } else if (i == 0) {
                     JLabel letra = new JLabel(letras.get(j));
-                    letra.setFont(michroma.deriveFont(30f));
+                    letra.setFont(MICHROMA.deriveFont(30f));
                     letra.setHorizontalAlignment(SwingConstants.CENTER);
                     tabuleiroPanel.add(letra);
 
                 } else if (j == 0) {
                     JLabel numero = new JLabel(String.valueOf(i));
-                    numero.setFont(michroma.deriveFont(30f));
+                    numero.setFont(MICHROMA.deriveFont(30f));
                     numero.setHorizontalAlignment(SwingConstants.CENTER);
                     tabuleiroPanel.add(numero);
 
@@ -114,13 +114,30 @@ public class Tabuleiro extends JFrame {
         JPanel painelDireita = new JPanel(new BorderLayout());
         painelDireita.add(conteudoDireita, BorderLayout.NORTH);
 
+        JPanel conteudoEsquerda = new JPanel();
+        conteudoEsquerda.setLayout(new BoxLayout(conteudoEsquerda, BoxLayout.Y_AXIS));
 
         JLabel embarcacoesTotais = new JLabel("Embarcações restantes:");
-        embarcacoesTotais.setFont(michroma.deriveFont(22f));
-        embarcacoesTotais.setHorizontalAlignment(SwingConstants.CENTER);
+        embarcacoesTotais.setFont(MICHROMA.deriveFont(22f));
+        embarcacoesTotais.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
+        JPanel listaEmbarcacoes = new JPanel();
+        listaEmbarcacoes.setLayout(new BoxLayout(listaEmbarcacoes, BoxLayout.Y_AXIS));
+
+        for (Embarcacao embarcacao : jogo.getEmbarcacoes()) {
+            JLabel nome = new JLabel(embarcacao.getNome());
+            nome.setFont(MICHROMA.deriveFont(20f));
+            nome.setAlignmentX(Component.CENTER_ALIGNMENT);
+            listaEmbarcacoes.add(nome);
+        }
+
+        conteudoEsquerda.add(embarcacoesTotais);
+        conteudoEsquerda.add(listaEmbarcacoes);
+
 
         JPanel painelEsquerda = new JPanel(new BorderLayout());
-        painelEsquerda.add(embarcacoesTotais, BorderLayout.NORTH);
+        painelEsquerda.add(conteudoEsquerda, BorderLayout.NORTH);
 
         int alturaLinha = tabuleiroPanel.getPreferredSize().height / (tamanhoMatriz + 1);
 
@@ -148,11 +165,11 @@ public class Tabuleiro extends JFrame {
 
 
         JButton btnJogarNovamente = new JButton("Jogar novamente");
-        btnJogarNovamente.setFont(michroma.deriveFont(20f));
+        btnJogarNovamente.setFont(MICHROMA.deriveFont(20f));
         btnJogarNovamente.setFocusPainted(false);
 
         JButton btnVoltar = new JButton("Voltar");
-        btnVoltar.setFont(michroma.deriveFont(20f));
+        btnVoltar.setFont(MICHROMA.deriveFont(20f));
         btnVoltar.setFocusPainted(false);
 
         JPanel painelSuperior = new JPanel(new FlowLayout(FlowLayout.RIGHT));

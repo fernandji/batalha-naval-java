@@ -104,16 +104,16 @@ public class Jogo {
         );
     }
 
-    public int calcularFrota(){
+    public int calcularFrota() {
         int frota = 0;
-        for(Embarcacao embarcacao : embarcacoes){
+        for (Embarcacao embarcacao : embarcacoes) {
             frota += embarcacao.getTamanho();
         }
         return frota;
     }
 
-    public boolean registrarTiro(){
-        if(totalTirosRestantes == 0){
+    public boolean registrarTiro() {
+        if (totalTirosRestantes == 0) {
             return true;
         }
         totalTirosRestantes -= 1;
@@ -121,19 +121,18 @@ public class Jogo {
 
     }
 
-    public void registrarAcerto(){
+    public void registrarAcerto() {
         acertos += 1;
     }
 
-    public String seGanhou(){
-        if(totalTirosRestantes >= 0 && acertos == calcularFrota()){
+    public String seGanhou() {
+        if (totalTirosRestantes >= 0 && acertos == calcularFrota()) {
             return "Você ganhou!";
-        } else if(totalTirosRestantes == 0 && acertos < calcularFrota()){
-            return("Você perdeu!");
+        } else if (totalTirosRestantes == 0 && acertos < calcularFrota()) {
+            return ("Você perdeu!");
         }
         return null;
     }
-
 
 
     public int getTotalTirosRestantes() {

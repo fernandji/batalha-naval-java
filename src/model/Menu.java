@@ -5,6 +5,8 @@ import java.awt.*;
 
 public class Menu extends JFrame {
 
+    private final Font MICHROMA = FontProvider.gerarMichroma();
+
     JLabel batalhaNavallbl = new JLabel("BATALHA NAVAL");
     JLabel apresentacaolbl = new JLabel("Seja bem-vindo ao clássico jogo de Tabuleiro!");
     JLabel apresentacaolbl2 = new JLabel("Nível Fácil - Tabuleiro 6x6 | Nível Difícil - Tabuleiro 8x8");
@@ -23,12 +25,11 @@ public class Menu extends JFrame {
 
 
 
-        Font michroma = FontProvider.gerarMichroma();
 
-        batalhaNavallbl.setFont(michroma.deriveFont(40f));
-        apresentacaolbl.setFont(michroma.deriveFont(22f));
-        apresentacaolbl2.setFont(michroma.deriveFont(22f));
-        dificuldadelbl.setFont(michroma.deriveFont(22f));
+        batalhaNavallbl.setFont(MICHROMA.deriveFont(40f));
+        apresentacaolbl.setFont(MICHROMA.deriveFont(22f));
+        apresentacaolbl2.setFont(MICHROMA.deriveFont(22f));
+        dificuldadelbl.setFont(MICHROMA.deriveFont(22f));
 
 
         conteudoCentral.setLayout(new GridBagLayout());
@@ -39,12 +40,12 @@ public class Menu extends JFrame {
 
 
         btnFacil.setBackground(new Color(255, 255, 255));
-        btnFacil.setFont(michroma.deriveFont(22f));
+        btnFacil.setFont(MICHROMA.deriveFont(22f));
         btnFacil.setFocusPainted(false);
         btnFacil.setPreferredSize(new Dimension(180, 50));
 
         btnDificil.setBackground(new Color(255, 255, 255));
-        btnDificil.setFont(michroma.deriveFont(22f));
+        btnDificil.setFont(MICHROMA.deriveFont(22f));
         btnDificil.setFocusPainted(false);
         btnDificil.setPreferredSize(new Dimension(180, 50));
 
