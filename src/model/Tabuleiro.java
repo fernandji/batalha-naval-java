@@ -7,18 +7,26 @@ import java.util.Map;
 
 public class Tabuleiro extends JFrame {
 
-    private final JPanel tabuleiroPanel = new JPanel();
+
     private final Font MICHROMA = FontProvider.gerarMichroma();
 
     public Tabuleiro(Jogo jogo) {
-        int[][] matriz = jogo.getMatriz();
-        int tamanhoMatriz = matriz.length;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Batalha Naval");
         setLayout(new BorderLayout());
         setSize(800, 600);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        montarJogo(jogo);
+    }
+
+    private void montarJogo(Jogo jogo){
+        getContentPane().removeAll();
+        JPanel tabuleiroPanel = new JPanel();
+
+        int[][] matriz = jogo.getMatriz();
+        int tamanhoMatriz = matriz.length;
 
         //painel do tabuleiro
         tabuleiroPanel.setLayout(
@@ -164,9 +172,9 @@ public class Tabuleiro extends JFrame {
         painelCentral.add(linhaJogo);
 
 
-        JButton btnJogarNovamente = new JButton("Jogar novamente");
-        btnJogarNovamente.setFont(MICHROMA.deriveFont(20f));
-        btnJogarNovamente.setFocusPainted(false);
+        JButton btnReiniciar = new JButton("Reiniciar");
+        btnReiniciar.setFont(MICHROMA.deriveFont(20f));
+        btnReiniciar.setFocusPainted(false);
 
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.setFont(MICHROMA.deriveFont(20f));
@@ -174,15 +182,22 @@ public class Tabuleiro extends JFrame {
 
         JPanel painelSuperior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         painelSuperior.add(btnVoltar);
-        painelSuperior.add(btnJogarNovamente);
+        painelSuperior.add(btnReiniciar);
 
         add(painelSuperior, BorderLayout.NORTH);
         add(painelCentral, BorderLayout.CENTER);
+
+        revalidate();
+        repaint();
 
         btnVoltar.addActionListener(e -> {
             Menu menu = new Menu();
             menu.setVisible(true);
             dispose();
+        });
+
+        btnReiniciar.addActionListener(e -> {
+            montarJogo(jogo.reiniciar());
         });
     }
 }

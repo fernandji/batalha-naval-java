@@ -7,15 +7,21 @@ import java.util.Random;
 
 public class Jogo {
 
+    private final int totalTiros;
     private int totalTirosRestantes;
     private int acertos;
-    private int[][] matriz;
+    private final int tamanho;
+    private final int[][] matriz;
     private List<Embarcacao> embarcacoes = new LinkedList<>();
+    private final boolean dificuldade;
     private Random random = new Random();
 
     public Jogo(int tamanho, int totalTiros, boolean dificuldade) {
+        this.tamanho = tamanho;
+        this.totalTiros = totalTiros;
         this.matriz = new int[tamanho][tamanho];
         this.totalTirosRestantes = totalTiros;
+        this.dificuldade = dificuldade;
 
         if (dificuldade) {
             adicionar(4, "Submarino", 1);
@@ -32,6 +38,10 @@ public class Jogo {
         }
 
         posicionarEmbarcacoes();
+    }
+
+    public Jogo reiniciar(){
+        return new Jogo(tamanho, totalTiros, dificuldade);
     }
 
     private void adicionar(int quantidade, String nome, int tamanho) {
@@ -155,10 +165,6 @@ public class Jogo {
         return matriz;
     }
 
-    public void setMatriz(int[][] matriz) {
-        this.matriz = matriz;
-    }
-
     public List<Embarcacao> getEmbarcacoes() {
         return embarcacoes;
     }
@@ -166,4 +172,9 @@ public class Jogo {
     public void setEmbarcacoes(List<Embarcacao> embarcacoes) {
         this.embarcacoes = embarcacoes;
     }
+
+    public boolean getDificuldade() {
+        return dificuldade;
+    }
+
 }
