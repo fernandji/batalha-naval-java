@@ -8,6 +8,7 @@ import java.util.Map;
 public class Tabuleiro extends JFrame {
 
     private final JPanel tabuleiroPanel = new JPanel();
+    private final Font michroma = FontProvider.gerarMichroma();
 
     public Tabuleiro(Jogo jogo) {
         int[][] matriz = jogo.getMatriz();
@@ -19,8 +20,7 @@ public class Tabuleiro extends JFrame {
         setSize(800, 600);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        Font michroma = FontProvider.gerarMichroma();
-
+        //painel do tabuleiro
         tabuleiroPanel.setLayout(
                 new GridLayout(tamanhoMatriz + 1, tamanhoMatriz + 1)
         );
@@ -129,10 +129,18 @@ public class Tabuleiro extends JFrame {
         btnVoltar.setFont(michroma.deriveFont(20f));
         btnVoltar.setFocusPainted(false);
 
-        JPanel painelEsquerda = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        painelEsquerda.add(btnVoltar);
-        painelEsquerda.add(btnJogarNovamente);
+        JPanel painelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        painelSuperior.add(btnVoltar);
+        painelSuperior.add(btnJogarNovamente);
 
+        JLabel embarcacoesTotais = new JLabel("Embarcações restantes:");
+        embarcacoesTotais.setFont(michroma.deriveFont(22f));
+
+        JPanel painelEsquerda = new JPanel(new GridBagLayout());
+        painelEsquerda.add(embarcacoesTotais);
+
+
+        add(painelSuperior, BorderLayout.NORTH);
         add(painelCentral, BorderLayout.CENTER);
         add(painelDireita, BorderLayout.EAST);
         add(painelEsquerda, BorderLayout.WEST);
