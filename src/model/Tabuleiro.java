@@ -141,7 +141,10 @@ public class Tabuleiro extends JFrame {
         listaEmbarcacoes.setLayout(new BoxLayout(listaEmbarcacoes, BoxLayout.Y_AXIS));
 
         for (Embarcacao embarcacao : jogo.getEmbarcacoes()) {
-            JLabel nome = new JLabel(embarcacao.getNome());
+            String casaTxt;
+            if (embarcacao.getTamanho() == 1) casaTxt = " casa";
+            else casaTxt = " casas";
+            JLabel nome = new JLabel(embarcacao.getNome() + " - " + embarcacao.getTamanho() + casaTxt);
             nome.setFont(MICHROMA.deriveFont(20f));
             nome.setAlignmentX(Component.CENTER_ALIGNMENT);
             listaEmbarcacoes.add(nome);
