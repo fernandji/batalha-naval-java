@@ -141,7 +141,7 @@ public class Jogo {
         } else if (totalTirosRestantes == 0 && acertos < calcularFrota()) {
             return ("Você perdeu!");
         }
-        return null;
+        return "";
     }
 
 

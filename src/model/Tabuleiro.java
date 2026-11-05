@@ -21,7 +21,7 @@ public class Tabuleiro extends JFrame {
         montarJogo(jogo);
     }
 
-    private void montarJogo(Jogo jogo){
+    private void montarJogo(Jogo jogo) {
         getContentPane().removeAll();
         JPanel tabuleiroPanel = new JPanel();
 
@@ -97,8 +97,15 @@ public class Tabuleiro extends JFrame {
 
                         jogo.registrarTiro();
                         totalTirosInt.setText(String.valueOf(jogo.getTotalTirosRestantes()));
-                        resultado.setText(jogo.seGanhou());
                         posicao.setEnabled(false);
+                        resultado.setText(jogo.seGanhou());
+                        if (jogo.seGanhou().equals("Você ganhou!") || jogo.seGanhou().equals("Você perdeu!")) {
+                            for (Component c : tabuleiroPanel.getComponents()) {
+                                if (c instanceof JButton) {
+                                    c.setEnabled(false);
+                                }
+                            }
+                        }
                     });
 
                     tabuleiroPanel.add(posicao);
