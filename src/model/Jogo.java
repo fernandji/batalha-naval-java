@@ -93,7 +93,7 @@ public class Jogo {
 
                             matriz[linhaAtual][colunaAtual] = i;
                         }
-
+                        embarcacoes.get(i).posicionar(linha, coluna, horizontal);
                         posicionado = true;
                     }
                 }

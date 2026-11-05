@@ -23,7 +23,56 @@ public class Tabuleiro extends JFrame {
 
     private void montarJogo(Jogo jogo) {
         getContentPane().removeAll();
-        JPanel tabuleiroPanel = new JPanel();
+        JPanel tabuleiroPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);   // fundo do painel
+
+                int colunas = jogo.getMatriz().length + 1;
+                Component primeira = getComponent(colunas + 1);            // casa A1
+                Component ultima = getComponent(getComponentCount() - 1);  // última casa
+
+                int x = primeira.getX();
+                int y = primeira.getY();
+                int larg = ultima.getX() + ultima.getWidth() - x;
+                int alt = ultima.getY() + ultima.getHeight() - y;
+
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                        RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                g2.drawImage(ImagemProvider.carregar("agua.png"), x, y, larg, alt, null);
+                g2.dispose();
+            }
+
+            @Override
+            protected void paintChildren(Graphics g) {
+                super.paintChildren(g);
+
+                int colunas = jogo.getMatriz().length + 1;
+
+                for (Embarcacao embarcacao : jogo.getEmbarcacoes()) {
+                    int indice = (embarcacao.getLinha() + 1) * colunas + (embarcacao.getColuna() + 1);
+                    Component casa = getComponent(indice);
+                    Image img = ImagemProvider.carregar(embarcacao.getArquivoImagem());
+
+                    Graphics2D g2 = (Graphics2D) g.create();
+                    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                            RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+                    if (embarcacao.isHorizontal() || embarcacao.getTamanho() == 1) {
+                        int larguraImg = casa.getWidth() * embarcacao.getTamanho();
+                        g2.drawImage(img, casa.getX(), casa.getY(), larguraImg, casa.getHeight(), null);
+                    } else {
+                        int comprimento = casa.getHeight() * embarcacao.getTamanho();
+                        g2.translate(casa.getX() + casa.getWidth(), casa.getY());
+                        g2.rotate(Math.PI / 2);
+                        g2.drawImage(img, 0, 0, comprimento, casa.getWidth(), null);
+                    }
+
+                    g2.dispose();
+                }
+            }
+        };
 
         int[][] matriz = jogo.getMatriz();
         int tamanhoMatriz = matriz.length;
@@ -74,8 +123,10 @@ public class Tabuleiro extends JFrame {
 
                 } else {
                     JButton posicao = new JButton();
-                    posicao.setBackground(new Color(121, 183, 216));
+                    posicao.setContentAreaFilled(false);
+                    posicao.setOpaque(false);
                     posicao.setFocusPainted(false);
+                    posicao.addChangeListener(e -> tabuleiroPanel.repaint());
 
                     int linhaMatriz = i - 1;
                     int colunaMatriz = j - 1;
@@ -98,6 +149,7 @@ public class Tabuleiro extends JFrame {
                         jogo.registrarTiro();
                         totalTirosInt.setText(String.valueOf(jogo.getTotalTirosRestantes()));
                         posicao.setEnabled(false);
+                        tabuleiroPanel.repaint();
                         resultado.setText(jogo.seGanhou());
                         if (jogo.seGanhou().equals("Você ganhou!") || jogo.seGanhou().equals("Você perdeu!")) {
                             for (Component c : tabuleiroPanel.getComponents()) {
@@ -145,6 +197,11 @@ public class Tabuleiro extends JFrame {
             if (embarcacao.getTamanho() == 1) casaTxt = " casa";
             else casaTxt = " casas";
             JLabel nome = new JLabel(embarcacao.getNome() + " - " + embarcacao.getTamanho() + casaTxt);
+
+            Image img = ImagemProvider.carregar(embarcacao.getArquivoImagem());
+            int larguraImagem = embarcacao.getTamanho() * 40;
+            nome.setIcon(new ImageIcon(img.getScaledInstance(larguraImagem, 40, Image.SCALE_SMOOTH)));
+
             nome.setFont(MICHROMA.deriveFont(20f));
             nome.setAlignmentX(Component.CENTER_ALIGNMENT);
             listaEmbarcacoes.add(nome);
