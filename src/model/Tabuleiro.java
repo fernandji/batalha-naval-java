@@ -23,7 +23,7 @@ public class Tabuleiro extends JFrame {
 
     private void montarJogo(Jogo jogo) {
         getContentPane().removeAll();
-        JPanel tabuleiroPanel = new JPanel() {
+        JPanel tabuleiroMatriz = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);   // fundo do painel
@@ -40,7 +40,7 @@ public class Tabuleiro extends JFrame {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                         RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-                g2.drawImage(ImagemProvider.carregar("agua.png"), x, y, larg, alt, null);
+                g2.drawImage(ImageProvider.carregar("agua.png"), x, y, larg, alt, null);
                 g2.dispose();
             }
 
@@ -53,7 +53,7 @@ public class Tabuleiro extends JFrame {
                 for (Embarcacao embarcacao : jogo.getEmbarcacoes()) {
                     int indice = (embarcacao.getLinha() + 1) * colunas + (embarcacao.getColuna() + 1);
                     Component casa = getComponent(indice);
-                    Image img = ImagemProvider.carregar(embarcacao.getArquivoImagem());
+                    Image img = ImageProvider.carregar(embarcacao.getArquivoImagem());
 
                     Graphics2D g2 = (Graphics2D) g.create();
                     g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
@@ -78,10 +78,14 @@ public class Tabuleiro extends JFrame {
         int tamanhoMatriz = matriz.length;
 
         //painel do tabuleiro
-        tabuleiroPanel.setLayout(
+        tabuleiroMatriz.setLayout(
                 new GridLayout(tamanhoMatriz + 1, tamanhoMatriz + 1)
         );
-        tabuleiroPanel.setPreferredSize(new Dimension(450, 450));
+        tabuleiroMatriz.setPreferredSize(new Dimension(450, 450));
+
+        JLabel mensagemTiro = new JLabel();
+        mensagemTiro.setFont(MICHROMA.deriveFont(22f));
+        mensagemTiro.setAlignmentX(CENTER_ALIGNMENT);
 
         JLabel totalTirosTxt = new JLabel("Total de tiros restantes: ");
         totalTirosTxt.setFont(MICHROMA.deriveFont(22f));
@@ -107,52 +111,50 @@ public class Tabuleiro extends JFrame {
             for (int j = 0; j <= tamanhoMatriz; j++) {
 
                 if (i == 0 && j == 0) {
-                    tabuleiroPanel.add(new JLabel(""));
+                    tabuleiroMatriz.add(new JLabel(""));
 
                 } else if (i == 0) {
                     JLabel letra = new JLabel(letras.get(j));
                     letra.setFont(MICHROMA.deriveFont(30f));
                     letra.setHorizontalAlignment(SwingConstants.CENTER);
-                    tabuleiroPanel.add(letra);
+                    tabuleiroMatriz.add(letra);
 
                 } else if (j == 0) {
                     JLabel numero = new JLabel(String.valueOf(i));
                     numero.setFont(MICHROMA.deriveFont(30f));
                     numero.setHorizontalAlignment(SwingConstants.CENTER);
-                    tabuleiroPanel.add(numero);
+                    tabuleiroMatriz.add(numero);
 
                 } else {
                     JButton posicao = new JButton();
                     posicao.setContentAreaFilled(false);
                     posicao.setOpaque(false);
                     posicao.setFocusPainted(false);
-                    posicao.addChangeListener(e -> tabuleiroPanel.repaint());
+                    posicao.addChangeListener(e -> tabuleiroMatriz.repaint());
 
                     int linhaMatriz = i - 1;
                     int colunaMatriz = j - 1;
 
-                    //temporário, apenas para mostrar navios durante o desenvolvimento
-                    if (matriz[linhaMatriz][colunaMatriz] != -1) {
-                        posicao.setText("N");
-                    }
 
                     posicao.addActionListener(e -> {
                         int embarcacao = matriz[linhaMatriz][colunaMatriz];
 
                         if (embarcacao == -1) {
                             posicao.setText("Água");
+                            mensagemTiro.setText("Você acertou a água!");
                         } else {
                             posicao.setText("Acerto");
                             jogo.registrarAcerto();
+                            mensagemTiro.setText("Você acertou uma embarcação!");
                         }
 
                         jogo.registrarTiro();
                         totalTirosInt.setText(String.valueOf(jogo.getTotalTirosRestantes()));
                         posicao.setEnabled(false);
-                        tabuleiroPanel.repaint();
+                        tabuleiroMatriz.repaint();
                         resultado.setText(jogo.seGanhou());
                         if (jogo.seGanhou().equals("Você ganhou!") || jogo.seGanhou().equals("Você perdeu!")) {
-                            for (Component c : tabuleiroPanel.getComponents()) {
+                            for (Component c : tabuleiroMatriz.getComponents()) {
                                 if (c instanceof JButton) {
                                     c.setEnabled(false);
                                 }
@@ -160,7 +162,7 @@ public class Tabuleiro extends JFrame {
                         }
                     });
 
-                    tabuleiroPanel.add(posicao);
+                    tabuleiroMatriz.add(posicao);
                 }
             }
         }
@@ -177,6 +179,10 @@ public class Tabuleiro extends JFrame {
         conteudoDireita.add(totalTirosInt);
         conteudoDireita.add(Box.createVerticalStrut(15));
         conteudoDireita.add(resultado);
+
+        JPanel painelMeio = new JPanel(new BorderLayout());
+        painelMeio.add(tabuleiroMatriz, BorderLayout.NORTH);
+        painelMeio.add(mensagemTiro, BorderLayout.SOUTH);
 
         JPanel painelDireita = new JPanel(new BorderLayout());
         painelDireita.add(conteudoDireita, BorderLayout.NORTH);
@@ -198,7 +204,7 @@ public class Tabuleiro extends JFrame {
             else casaTxt = " casas";
             JLabel nome = new JLabel(embarcacao.getNome() + " - " + embarcacao.getTamanho() + casaTxt);
 
-            Image img = ImagemProvider.carregar(embarcacao.getArquivoImagem());
+            Image img = ImageProvider.carregar(embarcacao.getArquivoImagem());
             int larguraImagem = embarcacao.getTamanho() * 40;
             nome.setIcon(new ImageIcon(img.getScaledInstance(larguraImagem, 40, Image.SCALE_SMOOTH)));
 
@@ -214,7 +220,7 @@ public class Tabuleiro extends JFrame {
         JPanel painelEsquerda = new JPanel(new BorderLayout());
         painelEsquerda.add(conteudoEsquerda, BorderLayout.NORTH);
 
-        int alturaLinha = tabuleiroPanel.getPreferredSize().height / (tamanhoMatriz + 1);
+        int alturaLinha = tabuleiroMatriz.getPreferredSize().height / (tamanhoMatriz + 1);
 
         painelDireita.setBorder(BorderFactory.createEmptyBorder(alturaLinha, 0, 0, 0));
         painelEsquerda.setBorder(BorderFactory.createEmptyBorder(alturaLinha, 0, 0, 0));
@@ -231,7 +237,7 @@ public class Tabuleiro extends JFrame {
 
         JPanel linhaJogo = new JPanel(new BorderLayout(30, 0));
         linhaJogo.add(painelEsquerda, BorderLayout.WEST);
-        linhaJogo.add(tabuleiroPanel, BorderLayout.CENTER);
+        linhaJogo.add(painelMeio, BorderLayout.CENTER);
         linhaJogo.add(painelDireita, BorderLayout.EAST);
 
 

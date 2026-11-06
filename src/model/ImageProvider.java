@@ -6,12 +6,12 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ImagemProvider {
+public class ImageProvider {
     private static final Map<String, Image> cache = new HashMap<>();
 
     public static Image carregar(String arquivo) {
         return cache.computeIfAbsent(arquivo, a -> {
-            URL url = ImagemProvider.class.getResource("/images/" + a);
+            URL url = ImageProvider.class.getResource("/images/" + a);
             if (url == null) {
                 throw new IllegalStateException("Imagem não encontrada: " + a);
             }
