@@ -137,16 +137,16 @@ public class Tabuleiro extends JFrame {
 
 
                     posicao.addActionListener(e -> {
-                        int embarcacao = matriz[linhaMatriz][colunaMatriz];
+                        int tiro = matriz[linhaMatriz][colunaMatriz];
 
-                        if (embarcacao == -1) {
+                        if (tiro == -1) {
                             posicao.setText("Água");
                             mensagemTiro.setText("Você acertou a água no "+ letras.get(colunaMatriz+1)+(linhaMatriz +1)+
                                     "!");
                         } else {
                             posicao.setText("Acerto");
-                            jogo.registrarAcerto();
-                            mensagemTiro.setText("Você acertou uma embarcação no "+ letras.get(colunaMatriz+1)+(linhaMatriz +1)+
+                            Embarcacao embarcacao = jogo.registrarAcerto(linhaMatriz, colunaMatriz);
+                            mensagemTiro.setText("Você acertou o "+embarcacao.getNome()+" no "+ letras.get(colunaMatriz+1)+(linhaMatriz +1)+
                                     "!");
                         }
 
@@ -182,9 +182,11 @@ public class Tabuleiro extends JFrame {
         conteudoDireita.add(Box.createVerticalStrut(15));
         conteudoDireita.add(resultado);
 
+        JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        painelInferior.add(mensagemTiro);
+
         JPanel painelMeio = new JPanel(new BorderLayout());
         painelMeio.add(tabuleiroMatriz, BorderLayout.NORTH);
-        painelMeio.add(mensagemTiro, BorderLayout.SOUTH);
 
         JPanel painelDireita = new JPanel(new BorderLayout());
         painelDireita.add(conteudoDireita, BorderLayout.NORTH);
@@ -241,6 +243,7 @@ public class Tabuleiro extends JFrame {
         linhaJogo.add(painelEsquerda, BorderLayout.WEST);
         linhaJogo.add(painelMeio, BorderLayout.CENTER);
         linhaJogo.add(painelDireita, BorderLayout.EAST);
+        linhaJogo.add(painelInferior, BorderLayout.SOUTH);
 
 
         JPanel painelCentral = new JPanel(new GridBagLayout());
