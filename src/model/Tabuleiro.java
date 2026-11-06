@@ -141,11 +141,13 @@ public class Tabuleiro extends JFrame {
 
                         if (embarcacao == -1) {
                             posicao.setText("Água");
-                            mensagemTiro.setText("Você acertou a água!");
+                            mensagemTiro.setText("Você acertou a água no "+ letras.get(colunaMatriz+1)+(linhaMatriz +1)+
+                                    "!");
                         } else {
                             posicao.setText("Acerto");
                             jogo.registrarAcerto();
-                            mensagemTiro.setText("Você acertou uma embarcação!");
+                            mensagemTiro.setText("Você acertou uma embarcação no "+ letras.get(colunaMatriz+1)+(linhaMatriz +1)+
+                                    "!");
                         }
 
                         jogo.registrarTiro();
