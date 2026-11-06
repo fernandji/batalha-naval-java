@@ -131,9 +131,13 @@ public class Jogo {
 
     }
 
-    public Embarcacao registrarAcerto(int linha, int coluna) {
+    public boolean registrarAcerto(Embarcacao embarcacao){
         acertos += 1;
+        embarcacao.registrarAcerto();
+        return embarcacao.isAfundada();
+    }
 
+    public Embarcacao qualBarcoAcertou(int linha, int coluna) {
         int tiro = matriz[linha][coluna];
         return embarcacoes.get(tiro);
 

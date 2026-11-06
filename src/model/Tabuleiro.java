@@ -142,13 +142,18 @@ public class Tabuleiro extends JFrame {
 
                         if (tiro == -1) {
                             posicao.setText("Água");
-                            mensagemTiro.setText("Você acertou a água no "+ letras.get(colunaMatriz+1)+(linhaMatriz +1)+
+                            mensagemTiro.setText("Você acertou a água no " + letras.get(colunaMatriz + 1) + (linhaMatriz + 1) +
                                     "!");
                         } else {
                             posicao.setText("Acerto");
-                            Embarcacao embarcacao = jogo.registrarAcerto(linhaMatriz, colunaMatriz);
-                            mensagemTiro.setText("Você acertou o "+embarcacao.getNome()+" no "+ letras.get(colunaMatriz+1)+(linhaMatriz +1)+
-                                    "!");
+                            Embarcacao embarcacao = jogo.qualBarcoAcertou(linhaMatriz, colunaMatriz);
+                            if (jogo.registrarAcerto(embarcacao)) {
+                                mensagemTiro.setText("Você acertou e afundou o " + embarcacao.getNome() + " no " + letras.get(colunaMatriz + 1) + (linhaMatriz + 1) +
+                                        "!");
+                            } else {
+                                mensagemTiro.setText("Você acertou o " + embarcacao.getNome() + " no " + letras.get(colunaMatriz + 1) + (linhaMatriz + 1) +
+                                        "!");
+                            }
                         }
 
                         jogo.registrarTiro();
