@@ -83,9 +83,10 @@ public class Tabuleiro extends JFrame {
         );
         tabuleiroMatriz.setPreferredSize(new Dimension(450, 450));
 
-        JLabel mensagemTiro = new JLabel();
+        JLabel mensagemTiro = new JLabel(" ");
         mensagemTiro.setFont(MICHROMA.deriveFont(22f));
-        mensagemTiro.setAlignmentX(CENTER_ALIGNMENT);
+        mensagemTiro.setHorizontalAlignment(SwingConstants.CENTER);
+        mensagemTiro.setPreferredSize(new Dimension(650, 30));
 
         JLabel totalTirosTxt = new JLabel("Total de tiros restantes: ");
         totalTirosTxt.setFont(MICHROMA.deriveFont(22f));
