@@ -134,16 +134,8 @@ public class Jogo {
     public Embarcacao registrarAcerto(int linha, int coluna) {
         acertos += 1;
 
-        if (matriz[linha][coluna] <= 3) {
-            return embarcacoes.get(1);
-        } else if (matriz[linha][coluna] <= 5) {
-            return embarcacoes.get(5);
-        } else if (matriz[linha][coluna] == 6) {
-            return embarcacoes.get(6);
-        } else if (matriz[linha][coluna] == 7) {
-            return embarcacoes.get(7);
-        }
-        return embarcacoes.get(8);
+        int tiro = matriz[linha][coluna];
+        return embarcacoes.get(tiro);
 
     }
 
