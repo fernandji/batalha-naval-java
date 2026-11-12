@@ -26,6 +26,7 @@ public class Tabuleiro extends JFrame {
         getContentPane().removeAll();
         int n = jogo.getMatriz().length;
         boolean[][] atingido = new boolean[n][n];
+        boolean[][] tiroNaAgua = new boolean[n][n];
         JPanel tabuleiroMatriz = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -89,15 +90,20 @@ public class Tabuleiro extends JFrame {
                     g2.dispose();
                 }
                 Image marcador = ImageProvider.carregar("acerto.png");
+                Image marcadorAgua = ImageProvider.carregar("tiro-agua.png");
                 Graphics2D gm = (Graphics2D) g.create();
                 gm.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                         RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
                 for (int lin = 0; lin < atingido.length; lin++) {
                     for (int col = 0; col < atingido[lin].length; col++) {
+                        Component celula = getComponent((lin + 1) * colunas + (col + 1));
+
                         if (atingido[lin][col]) {
-                            Component celula = getComponent((lin + 1) * colunas + (col + 1));
                             gm.drawImage(marcador, celula.getX(), celula.getY(),
+                                    celula.getWidth(), celula.getHeight(), null);
+                        } else if (tiroNaAgua[lin][col]) {
+                            gm.drawImage(marcadorAgua, celula.getX(), celula.getY(),
                                     celula.getWidth(), celula.getHeight(), null);
                         }
                     }
@@ -172,7 +178,7 @@ public class Tabuleiro extends JFrame {
                         int tiro = matriz[linhaMatriz][colunaMatriz];
 
                         if (tiro == -1) {
-                            posicao.setText("Água");
+                            tiroNaAgua[linhaMatriz][colunaMatriz] = true;
                             mensagemTiro.setText("Você acertou a água no " + letras.get(colunaMatriz + 1) + (linhaMatriz + 1) +
                                     "!");
                         } else {
