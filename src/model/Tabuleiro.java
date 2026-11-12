@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.awt.geom.Area;
 
 public class Tabuleiro extends JFrame {
 
@@ -23,6 +24,8 @@ public class Tabuleiro extends JFrame {
 
     private void montarJogo(Jogo jogo) {
         getContentPane().removeAll();
+        int n = jogo.getMatriz().length;
+        boolean[][] atingido = new boolean[n][n];
         JPanel tabuleiroMatriz = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -51,6 +54,19 @@ public class Tabuleiro extends JFrame {
                 int colunas = jogo.getMatriz().length + 1;
 
                 for (Embarcacao embarcacao : jogo.getEmbarcacoes()) {
+                    if (embarcacao.getPartesAtingidas() == 0) continue;
+
+                    Area visivel = new Area();
+                    for (int parte = 0; parte < embarcacao.getTamanho(); parte++) {
+                        int linha = embarcacao.isHorizontal() ? embarcacao.getLinha() : embarcacao.getLinha() + parte;
+                        int coluna = embarcacao.isHorizontal() ? embarcacao.getColuna() + parte : embarcacao.getColuna();
+
+                        if (atingido[linha][coluna]) {
+                            Component casaAtingida = getComponent((linha + 1) * colunas + (coluna + 1));
+                            visivel.add(new Area(casaAtingida.getBounds()));
+                        }
+                    }
+
                     int indice = (embarcacao.getLinha() + 1) * colunas + (embarcacao.getColuna() + 1);
                     Component casa = getComponent(indice);
                     Image img = ImageProvider.carregar(embarcacao.getArquivoImagem());
@@ -58,6 +74,7 @@ public class Tabuleiro extends JFrame {
                     Graphics2D g2 = (Graphics2D) g.create();
                     g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                             RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                    g2.clip(visivel);
 
                     if (embarcacao.isHorizontal() || embarcacao.getTamanho() == 1) {
                         int larguraImg = casa.getWidth() * embarcacao.getTamanho();
@@ -73,7 +90,6 @@ public class Tabuleiro extends JFrame {
                 }
             }
         };
-
         int[][] matriz = jogo.getMatriz();
         int tamanhoMatriz = matriz.length;
 
@@ -145,7 +161,7 @@ public class Tabuleiro extends JFrame {
                             mensagemTiro.setText("Você acertou a água no " + letras.get(colunaMatriz + 1) + (linhaMatriz + 1) +
                                     "!");
                         } else {
-                            posicao.setText("Acerto");
+                            atingido[linhaMatriz][colunaMatriz] = true;
                             Embarcacao embarcacao = jogo.qualBarcoAcertou(linhaMatriz, colunaMatriz);
                             if (jogo.registrarAcerto(embarcacao)) {
                                 mensagemTiro.setText("Você acertou e afundou o " + embarcacao.getNome() + " no " + letras.get(colunaMatriz + 1) + (linhaMatriz + 1) +
