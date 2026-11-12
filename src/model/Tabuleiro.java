@@ -88,6 +88,21 @@ public class Tabuleiro extends JFrame {
 
                     g2.dispose();
                 }
+                Image marcador = ImageProvider.carregar("acerto.png");
+                Graphics2D gm = (Graphics2D) g.create();
+                gm.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                        RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+                for (int lin = 0; lin < atingido.length; lin++) {
+                    for (int col = 0; col < atingido[lin].length; col++) {
+                        if (atingido[lin][col]) {
+                            Component celula = getComponent((lin + 1) * colunas + (col + 1));
+                            gm.drawImage(marcador, celula.getX(), celula.getY(),
+                                    celula.getWidth(), celula.getHeight(), null);
+                        }
+                    }
+                }
+                gm.dispose();
             }
         };
         int[][] matriz = jogo.getMatriz();
