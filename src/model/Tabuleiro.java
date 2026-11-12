@@ -23,14 +23,36 @@ public class Tabuleiro extends JFrame {
     }
 
     private void montarJogo(Jogo jogo) {
-        getContentPane().removeAll();
+        JPanel fundo = new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+
+                Image img = ImageProvider.carregar("fundo.gif");
+                int iw = img.getWidth(null);
+                int ih = img.getHeight(null);
+
+                double escala = Math.max((double) getWidth() / iw, (double) getHeight() / ih);
+                int w = (int) (iw * escala);
+                int h = (int) (ih * escala);
+                int x = (getWidth() - w) / 2;
+                int y = (getHeight() - h) / 2;
+
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                        RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                g2.drawImage(img, x, y, w, h, this);
+                g2.dispose();
+            }
+        };
+        setContentPane(fundo);
         int n = jogo.getMatriz().length;
         boolean[][] atingido = new boolean[n][n];
         boolean[][] tiroNaAgua = new boolean[n][n];
         JPanel tabuleiroMatriz = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
-                super.paintComponent(g);   // fundo do painel
+                super.paintComponent(g);
 
                 int colunas = jogo.getMatriz().length + 1;
                 Component primeira = getComponent(colunas + 1);            // casa A1
@@ -308,6 +330,9 @@ public class Tabuleiro extends JFrame {
         add(painelSuperior, BorderLayout.NORTH);
         add(painelCentral, BorderLayout.CENTER);
 
+        tornarTransparente(getContentPane());
+        linhaJogo.setOpaque(true);
+        linhaJogo.setBackground(new Color(238, 238, 238));
         revalidate();
         repaint();
 
@@ -320,5 +345,15 @@ public class Tabuleiro extends JFrame {
         btnReiniciar.addActionListener(e -> {
             montarJogo(jogo.reiniciar());
         });
+    }
+    private void tornarTransparente(Container container) {
+        for (Component componente : container.getComponents()) {
+            if (componente instanceof JPanel painel) {
+                painel.setOpaque(false);
+            }
+            if (componente instanceof Container filho) {
+                tornarTransparente(filho);
+            }
+        }
     }
 }
