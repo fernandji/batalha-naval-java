@@ -145,17 +145,21 @@ public class Tabuleiro extends JFrame {
 
         JLabel mensagemTiro = new JLabel(" ");
         mensagemTiro.setFont(MICHROMA.deriveFont(22f));
+        mensagemTiro.setForeground(Color.WHITE);
         mensagemTiro.setHorizontalAlignment(SwingConstants.CENTER);
         mensagemTiro.setPreferredSize(new Dimension(700, 30));
 
         JLabel totalTirosTxt = new JLabel("Total de tiros restantes: ");
         totalTirosTxt.setFont(MICHROMA.deriveFont(22f));
+        totalTirosTxt.setForeground(Color.WHITE);
 
         JLabel totalTirosInt = new JLabel(String.valueOf(jogo.getTotalTirosRestantes()));
-        totalTirosInt.setFont(MICHROMA.deriveFont(22f));
+        totalTirosInt.setFont(MICHROMA.deriveFont(30f));
+        totalTirosInt.setForeground(Color.WHITE);
 
         JLabel resultado = new JLabel();
         resultado.setFont(MICHROMA.deriveFont(30f));
+        resultado.setForeground(Color.WHITE);
 
         JPanel listaEmbarcacoes = new JPanel();
         listaEmbarcacoes.setLayout(new BoxLayout(listaEmbarcacoes, BoxLayout.Y_AXIS));
@@ -181,12 +185,14 @@ public class Tabuleiro extends JFrame {
                 } else if (i == 0) {
                     JLabel letra = new JLabel(letras.get(j));
                     letra.setFont(MICHROMA.deriveFont(30f));
+                    letra.setForeground(Color.WHITE);
                     letra.setHorizontalAlignment(SwingConstants.CENTER);
                     tabuleiroMatriz.add(letra);
 
                 } else if (j == 0) {
                     JLabel numero = new JLabel(String.valueOf(i));
                     numero.setFont(MICHROMA.deriveFont(30f));
+                    numero.setForeground(Color.WHITE);
                     numero.setHorizontalAlignment(SwingConstants.CENTER);
                     tabuleiroMatriz.add(numero);
 
@@ -272,6 +278,7 @@ public class Tabuleiro extends JFrame {
 
         JLabel embarcacoesTotais = new JLabel("Embarcações restantes:");
         embarcacoesTotais.setFont(MICHROMA.deriveFont(22f));
+        embarcacoesTotais.setForeground(Color.WHITE);
         embarcacoesTotais.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
@@ -286,6 +293,7 @@ public class Tabuleiro extends JFrame {
             nome.setIcon(new ImageIcon(img.getScaledInstance(larguraImagem, 40, Image.SCALE_SMOOTH)));
 
             nome.setFont(MICHROMA.deriveFont(20f));
+            nome.setForeground(Color.WHITE);
             nome.setAlignmentX(Component.CENTER_ALIGNMENT);
             listaEmbarcacoes.add(nome);
             listaLabelsEmbarcacao.put(embarcacao, nome);
@@ -345,7 +353,7 @@ public class Tabuleiro extends JFrame {
         add(painelCentral, BorderLayout.CENTER);
 
         tornarTransparente(getContentPane());
-        linhaJogo.setOpaque(true);
+        linhaJogo.setOpaque(false);
         linhaJogo.setBackground(new Color(238, 238, 238));
         revalidate();
         repaint();
