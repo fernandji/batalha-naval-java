@@ -163,7 +163,7 @@ public class Tabuleiro extends JFrame {
 
         JPanel listaEmbarcacoes = new JPanel();
         listaEmbarcacoes.setLayout(new BoxLayout(listaEmbarcacoes, BoxLayout.Y_AXIS));
-        Map<Embarcacao, JLabel> listaLabelsEmbarcacao = new HashMap();
+        Map<Embarcacao, JLabel> listaLabelsEmbarcacao = new HashMap<>();
 
 
         Map<Integer, String> letras = new LinkedHashMap<>();
@@ -267,8 +267,8 @@ public class Tabuleiro extends JFrame {
         JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
         painelInferior.add(mensagemTiro);
 
-        JPanel painelMeio = new JPanel(new BorderLayout());
-        painelMeio.add(tabuleiroMatriz, BorderLayout.NORTH);
+        JPanel painelMeio = new JPanel(new GridBagLayout());
+        painelMeio.add(tabuleiroMatriz);
 
         JPanel painelDireita = new JPanel(new BorderLayout());
         painelDireita.add(conteudoDireita, BorderLayout.NORTH);
