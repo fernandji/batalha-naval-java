@@ -146,7 +146,7 @@ public class Tabuleiro extends JFrame {
         JLabel mensagemTiro = new JLabel(" ");
         mensagemTiro.setFont(MICHROMA.deriveFont(22f));
         mensagemTiro.setHorizontalAlignment(SwingConstants.CENTER);
-        mensagemTiro.setPreferredSize(new Dimension(650, 30));
+        mensagemTiro.setPreferredSize(new Dimension(700, 30));
 
         JLabel totalTirosTxt = new JLabel("Total de tiros restantes: ");
         totalTirosTxt.setFont(MICHROMA.deriveFont(22f));
@@ -216,7 +216,7 @@ public class Tabuleiro extends JFrame {
                                         "!");
 
                                 JLabel label = listaLabelsEmbarcacao.get(embarcacao);
-                                listaEmbarcacoes.remove(label);
+                                label.setEnabled(false);
                                 listaEmbarcacoes.revalidate();
                                 listaEmbarcacoes.repaint();
 
@@ -298,7 +298,7 @@ public class Tabuleiro extends JFrame {
         JPanel painelEsquerda = new JPanel(new BorderLayout());
         painelEsquerda.add(conteudoEsquerda, BorderLayout.NORTH);
 
-        int alturaLinha = tabuleiroMatriz.getPreferredSize().height / (tamanhoMatriz + 1);
+        int alturaLinha = tabuleiroMatriz.getPreferredSize().height / (tamanhoMatriz + 15);
 
         painelDireita.setBorder(BorderFactory.createEmptyBorder(alturaLinha, 0, 0, 0));
         painelEsquerda.setBorder(BorderFactory.createEmptyBorder(alturaLinha, 0, 0, 0));
@@ -307,10 +307,15 @@ public class Tabuleiro extends JFrame {
                 painelEsquerda.getPreferredSize().width,
                 painelDireita.getPreferredSize().width
         );
-
         largura = Math.max(largura, 350);
-        painelEsquerda.setPreferredSize(new Dimension(largura, 0));
-        painelDireita.setPreferredSize(new Dimension(largura, 0));
+
+        int altura = Math.max(
+                painelEsquerda.getPreferredSize().height,
+                painelDireita.getPreferredSize().height
+        );
+
+        painelEsquerda.setPreferredSize(new Dimension(largura, altura));
+        painelDireita.setPreferredSize(new Dimension(largura, altura));
 
 
         JPanel linhaJogo = new JPanel(new BorderLayout(30, 0));
