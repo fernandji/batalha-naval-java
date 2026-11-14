@@ -2,6 +2,7 @@ package model;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.awt.geom.Area;
@@ -156,6 +157,10 @@ public class Tabuleiro extends JFrame {
         JLabel resultado = new JLabel();
         resultado.setFont(MICHROMA.deriveFont(30f));
 
+        JPanel listaEmbarcacoes = new JPanel();
+        listaEmbarcacoes.setLayout(new BoxLayout(listaEmbarcacoes, BoxLayout.Y_AXIS));
+        Map<Embarcacao, JLabel> listaLabelsEmbarcacao = new HashMap();
+
 
         Map<Integer, String> letras = new LinkedHashMap<>();
         letras.put(1, "A");
@@ -209,6 +214,12 @@ public class Tabuleiro extends JFrame {
                             if (jogo.registrarAcerto(embarcacao)) {
                                 mensagemTiro.setText("Você acertou e afundou o " + embarcacao.getNome() + " no " + letras.get(colunaMatriz + 1) + (linhaMatriz + 1) +
                                         "!");
+
+                                JLabel label = listaLabelsEmbarcacao.get(embarcacao);
+                                listaEmbarcacoes.remove(label);
+                                listaEmbarcacoes.revalidate();
+                                listaEmbarcacoes.repaint();
+
                             } else {
                                 mensagemTiro.setText("Você acertou o " + embarcacao.getNome() + " no " + letras.get(colunaMatriz + 1) + (linhaMatriz + 1) +
                                         "!");
@@ -264,9 +275,6 @@ public class Tabuleiro extends JFrame {
         embarcacoesTotais.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
-        JPanel listaEmbarcacoes = new JPanel();
-        listaEmbarcacoes.setLayout(new BoxLayout(listaEmbarcacoes, BoxLayout.Y_AXIS));
-
         for (Embarcacao embarcacao : jogo.getEmbarcacoes()) {
             String casaTxt;
             if (embarcacao.getTamanho() == 1) casaTxt = " casa";
@@ -280,6 +288,7 @@ public class Tabuleiro extends JFrame {
             nome.setFont(MICHROMA.deriveFont(20f));
             nome.setAlignmentX(Component.CENTER_ALIGNMENT);
             listaEmbarcacoes.add(nome);
+            listaLabelsEmbarcacao.put(embarcacao, nome);
         }
 
         conteudoEsquerda.add(embarcacoesTotais);
