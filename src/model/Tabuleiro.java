@@ -286,7 +286,7 @@ public class Tabuleiro extends JFrame {
             String casaTxt;
             if (embarcacao.getTamanho() == 1) casaTxt = " casa";
             else casaTxt = " casas";
-            JLabel nome = new JLabel(embarcacao.getNome() + " - " + embarcacao.getTamanho() + casaTxt);
+            JLabel nome = new JLabel();
 
             Image img = ImageProvider.carregar(embarcacao.getArquivoImagem());
             int larguraImagem = embarcacao.getTamanho() * 40;
@@ -315,7 +315,7 @@ public class Tabuleiro extends JFrame {
                 painelEsquerda.getPreferredSize().width,
                 painelDireita.getPreferredSize().width
         );
-        largura = Math.max(largura, 350);
+        largura = Math.min(largura, 350);
 
         int altura = Math.max(
                 painelEsquerda.getPreferredSize().height,
