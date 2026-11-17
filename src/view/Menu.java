@@ -1,4 +1,7 @@
-package model;
+package view;
+
+import model.Jogo;
+import util.FontProvider;
 
 import javax.swing.*;
 import java.awt.*;

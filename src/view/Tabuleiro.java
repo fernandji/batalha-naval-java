@@ -1,4 +1,9 @@
-package model;
+package view;
+
+import model.Embarcacao;
+import model.Jogo;
+import util.FontProvider;
+import util.ImageProvider;
 
 import javax.swing.*;
 import java.awt.*;
@@ -336,6 +341,7 @@ public class Tabuleiro extends JFrame {
         JPanel painelCentral = new JPanel(new GridBagLayout());
         painelCentral.add(linhaJogo);
 
+        JPanel botoesDireita = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         JButton btnReiniciar = new JButton("Reiniciar");
         btnReiniciar.setFont(MICHROMA.deriveFont(20f));
@@ -345,9 +351,18 @@ public class Tabuleiro extends JFrame {
         btnVoltar.setFont(MICHROMA.deriveFont(20f));
         btnVoltar.setFocusPainted(false);
 
-        JPanel painelSuperior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        painelSuperior.add(btnVoltar);
-        painelSuperior.add(btnReiniciar);
+        botoesDireita.add(btnReiniciar);
+        botoesDireita.add(btnVoltar);
+
+        JPanel botaoEsquerda = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JButton btnInfoEmbarcacoes = new JButton("Informações");
+        btnInfoEmbarcacoes.setFont(MICHROMA.deriveFont(20f));
+        btnInfoEmbarcacoes.setFocusPainted(false);
+        botaoEsquerda.add(btnInfoEmbarcacoes);
+
+        JPanel painelSuperior = new JPanel(new BorderLayout());
+        painelSuperior.add(botaoEsquerda, BorderLayout.WEST);
+        painelSuperior.add(botoesDireita, BorderLayout.EAST);
 
         add(painelSuperior, BorderLayout.NORTH);
         add(painelCentral, BorderLayout.CENTER);
