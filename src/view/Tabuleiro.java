@@ -21,6 +21,7 @@ public class Tabuleiro extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Batalha Naval");
+        setIconImage(ImageProvider.carregar("icone.png"));
         setLayout(new BorderLayout());
         setSize(800, 600);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
