@@ -22,6 +22,7 @@ public class Menu extends JFrame {
     public Menu() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Batalha Naval");
+        setIconImage(ImageProvider.carregar("icone.png"));
         setLayout(new BorderLayout(5, 5));
         setSize(800, 600);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
