@@ -2,7 +2,7 @@ package view;
 
 import model.Jogo;
 import util.FontProvider;
-
+import util.ImageProvider;
 import javax.swing.*;
 import java.awt.*;
 
@@ -25,21 +25,44 @@ public class Menu extends JFrame {
         setLayout(new BorderLayout(5, 5));
         setSize(800, 600);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setContentPane(new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
 
+                Image img = ImageProvider.carregar("Tela-Inicial.png");
+                int iw = img.getWidth(null);
+                int ih = img.getHeight(null);
 
+                double escala = Math.max((double) getWidth() / iw, (double) getHeight() / ih);
+                int w = (int) (iw * escala);
+                int h = (int) (ih * escala);
+                int x = (getWidth() - w) / 2;
+                int y = (getHeight() - h) / 2;
 
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                        RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                g2.drawImage(img, x, y, w, h, this);
+                g2.dispose();
+            }
+        });
 
         batalhaNavallbl.setFont(MICHROMA.deriveFont(40f));
         apresentacaolbl.setFont(MICHROMA.deriveFont(22f));
         apresentacaolbl2.setFont(MICHROMA.deriveFont(22f));
         dificuldadelbl.setFont(MICHROMA.deriveFont(22f));
+        batalhaNavallbl.setForeground(Color.WHITE);
+        apresentacaolbl.setForeground(Color.WHITE);
+        apresentacaolbl2.setForeground(Color.WHITE);
+        dificuldadelbl.setForeground(Color.WHITE);
 
 
         conteudoCentral.setLayout(new GridBagLayout());
-        conteudoCentral.setBackground(new Color(225, 216, 216));
+        conteudoCentral.setOpaque(false);
 
         botoesPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        botoesPanel.setBackground(new Color(225, 216, 216));
+        botoesPanel.setOpaque(false);
 
 
         btnFacil.setBackground(new Color(255, 255, 255));
